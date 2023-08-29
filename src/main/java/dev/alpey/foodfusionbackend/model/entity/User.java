@@ -40,7 +40,7 @@ public class User {
 
     private String name;
 
-    private LocalDate creationDate;
+    private LocalDate createdDate;
 
     @ManyToMany
     @JoinTable(

@@ -7,7 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -30,6 +30,9 @@ public class Category {
     private Long id;
 
     private String name;
+
+    @Lob
+    private byte[] image;
 
     @OneToMany(mappedBy = "category")
     private List<Food> foodList = new ArrayList<>();
