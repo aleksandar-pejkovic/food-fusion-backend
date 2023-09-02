@@ -1,4 +1,4 @@
-package dev.alpey.foodfusionbackend.configuration.validation.order.invoicenumber;
+package dev.alpey.foodfusionbackend.configuration.validation.order.ordernumber;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -6,10 +6,10 @@ import java.util.regex.Pattern;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class InvoiceNumberValidator implements ConstraintValidator<InvoiceNumber, String> {
+public class OrderNumberValidator implements ConstraintValidator<OrderNumber, String> {
 
     @Override
-    public void initialize(InvoiceNumber invoiceNumber) {
+    public void initialize(OrderNumber orderNumber) {
     }
 
     @Override

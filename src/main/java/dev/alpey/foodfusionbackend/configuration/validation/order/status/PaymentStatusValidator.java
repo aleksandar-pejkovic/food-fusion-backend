@@ -1,6 +1,5 @@
 package dev.alpey.foodfusionbackend.configuration.validation.order.status;
 
-import dev.alpey.reliabill.enums.InvoiceStatus;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -12,6 +11,6 @@ public class PaymentStatusValidator implements ConstraintValidator<PaymentStatus
 
     @Override
     public boolean isValid(String paymentStatus, ConstraintValidatorContext context) {
-        return InvoiceStatus.isValidInvoiceStatus(paymentStatus);
+        return "PENDING".equals(paymentStatus);
     }
 }

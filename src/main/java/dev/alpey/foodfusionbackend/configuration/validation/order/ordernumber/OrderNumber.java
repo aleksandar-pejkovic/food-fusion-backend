@@ -1,4 +1,4 @@
-package dev.alpey.foodfusionbackend.configuration.validation.food.taxrate;
+package dev.alpey.foodfusionbackend.configuration.validation.order.ordernumber;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -10,12 +10,12 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = TaxRateValidator.class)
-@Target({ElementType.FIELD})
+@Constraint(validatedBy = OrderNumberValidator.class)
+@Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TaxRate {
+public @interface OrderNumber {
 
-    String message() default "Tax rate must be 0, 10 or 20!";
+    String message() default "Invalid invoice number format!";
 
     Class<?>[] groups() default {};
 
