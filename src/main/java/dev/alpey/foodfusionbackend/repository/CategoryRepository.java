@@ -12,6 +12,6 @@ import dev.alpey.foodfusionbackend.model.entity.Category;
 @Repository
 public interface CategoryRepository extends ListCrudRepository<Category, Long> {
 
-    @Query("SELECT * FROM Category c WHERE c.user.username :username")
+    @Query("SELECT c FROM Category c WHERE c.user.username = :username")
     List<Category> findByUsername(@Param("username") String username);
 }

@@ -12,6 +12,6 @@ import dev.alpey.foodfusionbackend.model.entity.Order;
 @Repository
 public interface OrderRepository extends ListCrudRepository<Order, Long> {
 
-    @Query("SELECT * FROM Order o WHERE o.user.username = :username")
+    @Query("SELECT o FROM Order o WHERE o.user.username = :username")
     List<Order> findByUsername(@Param("username") String username);
 }

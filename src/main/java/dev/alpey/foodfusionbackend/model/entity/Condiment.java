@@ -8,32 +8,32 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "items")
+@Table(name = "condiments")
 @Getter
 @Setter
-public class Item {
+public class Condiment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double quantity;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "food_id")
-    private Food food;
+    private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-
-    @ManyToMany(mappedBy = "itemList")
-    private List<Condiment> condimentList = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "items_condiments",
+            joinColumns = @JoinColumn(
+                    name = "item_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "condiment_id", referencedColumnName = "id"))
+    private List<Item> itemList = new ArrayList<>();
 }

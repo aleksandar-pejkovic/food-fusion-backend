@@ -12,6 +12,6 @@ import dev.alpey.foodfusionbackend.model.entity.Business;
 @Repository
 public interface BusinessRepository extends ListCrudRepository<Business, Long> {
 
-    @Query("SELECT * FROM Business b WHERE b.user.username = :username")
+    @Query("SELECT b FROM Business b WHERE b.user.username = :username")
     List<Business> findByUsername(@Param("username") String username);
 }
