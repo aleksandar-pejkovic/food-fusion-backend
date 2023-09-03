@@ -1,7 +1,6 @@
 package dev.alpey.foodfusionbackend.service.user;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,9 +42,6 @@ public class UserService {
     }
 
     public List<UserDTO> loadAllUsers() {
-        return repository.findAll()
-                .stream()
-                .map(mapper::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.convertToDtoList(repository.findAll());
     }
 }

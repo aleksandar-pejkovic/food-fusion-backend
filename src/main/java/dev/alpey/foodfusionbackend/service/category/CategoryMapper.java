@@ -1,5 +1,8 @@
 package dev.alpey.foodfusionbackend.service.category;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,5 +42,11 @@ public class CategoryMapper {
         CategoryDTO categoryDTO = mapper.map(category, CategoryDTO.class);
         categoryDTO.setUserId(category.getUser().getId());
         return categoryDTO;
+    }
+
+    List<CategoryDTO> convertToDtoList(List<Category> categoryList) {
+        return categoryList.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 }

@@ -3,6 +3,8 @@ package dev.alpey.foodfusionbackend.service.user;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +38,8 @@ public class UserMapper {
     User convertToEntity(UserDTO userDTO) {
         validateUserDoesNotExist(userDTO.getUsername(), userDTO.getEmail());
         User user = mapper.map(userDTO, User.class);
-        LocalDate currentDate = getCurrentDate();
-        user.setCreatedDate(currentDate);
+        ZoneId belgradeTimeZone = ZoneId.of("Europe/Belgrade");
+        user.setCreatedDate(LocalDate.now(belgradeTimeZone));
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         Role userRole = roleRepository.findByName(RoleName.USER);
@@ -57,10 +59,10 @@ public class UserMapper {
         return mapper.map(user, UserDTO.class);
     }
 
-    private static LocalDate getCurrentDate() {
-        ZoneId belgradeTimeZone = ZoneId.of("Europe/Belgrade");
-        LocalDate currentDate = LocalDate.now(belgradeTimeZone);
-        return currentDate;
+    List<UserDTO> convertToDtoList(List<User> userList) {
+        return userList.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     private void validateUserDoesNotExist(String username, String email) {

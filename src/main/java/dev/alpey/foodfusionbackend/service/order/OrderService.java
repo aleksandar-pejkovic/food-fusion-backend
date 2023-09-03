@@ -1,7 +1,6 @@
 package dev.alpey.foodfusionbackend.service.order;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,16 +42,10 @@ public class OrderService {
 
     public List<OrderDTO> loadOrderListByUsername() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return repository.findByUsername(username)
-                .stream()
-                .map(mapper::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.convertToDtoList(repository.findByUsername(username));
     }
 
     public List<OrderDTO> loadAllOrders() {
-        return repository.findAll()
-                .stream()
-                .map(mapper::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.convertToDtoList(repository.findAll());
     }
 }

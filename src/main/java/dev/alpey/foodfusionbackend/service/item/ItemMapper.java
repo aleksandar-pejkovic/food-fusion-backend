@@ -1,5 +1,8 @@
 package dev.alpey.foodfusionbackend.service.item;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,5 +44,11 @@ public class ItemMapper {
         itemDTO.setFoodId(item.getFood().getId());
         itemDTO.setOrderId(item.getOrder().getId());
         return itemDTO;
+    }
+
+    List<ItemDTO> convertToDtoList(List<Item> itemList) {
+        return itemList.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 }

@@ -1,13 +1,11 @@
 package dev.alpey.foodfusionbackend.service.category;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import dev.alpey.foodfusionbackend.model.dto.BusinessDTO;
 import dev.alpey.foodfusionbackend.model.dto.CategoryDTO;
 import dev.alpey.foodfusionbackend.model.entity.Category;
 import dev.alpey.foodfusionbackend.repository.CategoryRepository;
@@ -44,16 +42,10 @@ public class CategoryService {
 
     public List<CategoryDTO> loadCategoryListForCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return repository.findByUsername(username)
-                .stream()
-                .map(mapper::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.convertToDtoList(repository.findByUsername(username));
     }
 
     public List<CategoryDTO> loadAllCategories() {
-        return repository.findAll()
-                .stream()
-                .map(mapper::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.convertToDtoList(repository.findAll());
     }
 }

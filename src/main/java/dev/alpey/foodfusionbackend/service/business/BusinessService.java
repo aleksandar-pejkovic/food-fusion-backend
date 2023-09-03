@@ -1,7 +1,6 @@
 package dev.alpey.foodfusionbackend.service.business;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,16 +42,10 @@ public class BusinessService {
 
     public List<BusinessDTO> loadBusinessListForCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return repository.findByUsername(username)
-                .stream()
-                .map(mapper::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.convertToDtoList(repository.findByUsername(username));
     }
 
     public List<BusinessDTO> loadAllBusinesses() {
-        return repository.findAll()
-                .stream()
-                .map(mapper::convertToDto)
-                .collect(Collectors.toList());
+        return mapper.convertToDtoList(repository.findAll());
     }
 }

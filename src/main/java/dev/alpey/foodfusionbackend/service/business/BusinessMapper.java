@@ -1,5 +1,8 @@
 package dev.alpey.foodfusionbackend.service.business;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,5 +42,11 @@ public class BusinessMapper {
         BusinessDTO businessDTO = mapper.map(business, BusinessDTO.class);
         businessDTO.setUserId(business.getUser().getId());
         return businessDTO;
+    }
+
+    List<BusinessDTO> convertToDtoList(List<Business> businessList) {
+        return businessList.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 }

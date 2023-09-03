@@ -1,5 +1,8 @@
 package dev.alpey.foodfusionbackend.service.order;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,5 +52,11 @@ public class OrderMapper {
         orderDTO.setStatus(order.getOrderStatus().getStatus());
         orderDTO.setUserId(order.getUser().getId());
         return orderDTO;
+    }
+
+    List<OrderDTO> convertToDtoList(List<Order> orderList) {
+        return orderList.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 }
