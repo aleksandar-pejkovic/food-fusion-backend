@@ -2,7 +2,9 @@ package dev.alpey.foodfusionbackend.configuration.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -53,7 +55,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private List<String> getPermissions(Collection<Role> roles) {
         List<String> grantedAuthorities = new ArrayList<>();
-        List<Permission> permissions = new ArrayList<>();
+        Set<Permission> permissions = new HashSet<>();
         for (Role role : roles) {
             grantedAuthorities.add(role.getName().getAuthority());
             permissions.addAll(role.getPermissions());
