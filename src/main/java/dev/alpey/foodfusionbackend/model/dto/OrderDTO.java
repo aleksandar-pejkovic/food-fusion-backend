@@ -1,5 +1,7 @@
 package dev.alpey.foodfusionbackend.model.dto;
 
+import java.time.LocalDate;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,9 +11,11 @@ public class OrderDTO {
 
     private Long id;
 
-    private double quantity;
+    private int orderNumber;
 
-    private Long foodId;
+    private LocalDate creationDate;
 
-    private Long orderId;
+    private String status;
+
+    private Long userId;
 }

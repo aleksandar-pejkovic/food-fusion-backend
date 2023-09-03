@@ -24,12 +24,6 @@ public interface UserRepository extends ListCrudRepository<User, Long> {
     @Query("SELECT u.email FROM User u JOIN u.roles r ON r.name = 'ADMIN'")
     List<String> findAdminEmails();
 
-    List<User> searchByUsername(String searchTerm);
-
-    List<User> searchByName(String searchTerm);
-
-    List<User> searchByEmail(String searchTerm);
-
     boolean existsByUsername(String username);
 
     boolean existsByEmail(String email);

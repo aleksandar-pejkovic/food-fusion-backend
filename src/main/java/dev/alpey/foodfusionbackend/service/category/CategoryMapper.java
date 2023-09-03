@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 
 import dev.alpey.foodfusionbackend.model.dto.CategoryDTO;
 import dev.alpey.foodfusionbackend.model.entity.Category;
+import dev.alpey.foodfusionbackend.model.entity.User;
 import dev.alpey.foodfusionbackend.repository.CategoryRepository;
+import dev.alpey.foodfusionbackend.repository.UserRepository;
 
 @Component
 public class CategoryMapper {
@@ -15,10 +17,16 @@ public class CategoryMapper {
     private CategoryRepository categoryRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
     Category convertToEntity(CategoryDTO categoryDTO) {
-        return mapper.map(categoryDTO, Category.class);
+        User user = userRepository.findById(categoryDTO.getUserId()).orElseThrow();
+        Category category = mapper.map(categoryDTO, Category.class);
+        category.setUser(user);
+        return category;
     }
 
     Category convertToExistingEntity(CategoryDTO categoryDTO) {
@@ -28,6 +36,8 @@ public class CategoryMapper {
     }
 
     CategoryDTO convertToDto(Category category) {
-        return mapper.map(category, CategoryDTO.class);
+        CategoryDTO categoryDTO = mapper.map(category, CategoryDTO.class);
+        categoryDTO.setUserId(category.getUser().getId());
+        return categoryDTO;
     }
 }

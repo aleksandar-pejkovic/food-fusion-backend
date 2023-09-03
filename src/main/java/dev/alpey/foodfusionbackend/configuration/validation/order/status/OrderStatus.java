@@ -10,10 +10,10 @@ import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = PaymentStatusValidator.class)
+@Constraint(validatedBy = OrderStatusValidator.class)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PaymentStatus {
+public @interface OrderStatus {
 
     String message() default "Invalid status! Valid status: [Neizmireno, Delimično izmireno, Plaćeno]";
 

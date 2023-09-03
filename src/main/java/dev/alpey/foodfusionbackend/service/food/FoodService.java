@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import dev.alpey.foodfusionbackend.model.dto.FoodDTO;
@@ -38,6 +39,14 @@ public class FoodService {
     public FoodDTO loadFoodById(Long id) {
         Food food = repository.findById(id).orElseThrow();
         return mapper.convertToDto(food);
+    }
+
+    public List<FoodDTO> loadFoodListForCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return repository.findByUsername(username)
+                .stream()
+                .map(mapper::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public List<FoodDTO> loadAllFood() {

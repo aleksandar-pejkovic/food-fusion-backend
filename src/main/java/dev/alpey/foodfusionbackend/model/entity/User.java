@@ -13,19 +13,13 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User {
 
     @Id
@@ -52,7 +46,4 @@ public class User {
                     name = "role_id",
                     referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
-
-    @OneToOne(mappedBy = "user")
-    private Business business;
 }
