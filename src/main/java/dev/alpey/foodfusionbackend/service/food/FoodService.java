@@ -40,6 +40,10 @@ public class FoodService {
         return mapper.convertToDto(food);
     }
 
+    public List<FoodDTO> loadFoodListByCategoryId(Long categoryId) {
+        return mapper.convertToDtoList(repository.findByCategoryId(categoryId));
+    }
+
     public List<FoodDTO> loadFoodListForCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return mapper.convertToDtoList(repository.findByUsername(username));

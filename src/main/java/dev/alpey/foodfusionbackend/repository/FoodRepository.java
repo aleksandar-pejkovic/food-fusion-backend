@@ -14,4 +14,7 @@ public interface FoodRepository extends ListCrudRepository<Food, Long> {
 
     @Query("SELECT f FROM Food f WHERE f.category.user.username = :username")
     List<Food> findByUsername(@Param("username") String username);
+
+    @Query("SELECT f FROM Food f WHERE f.category.id = :categoryId")
+    List<Food> findByCategoryId(@Param("categoryId") Long categoryId);
 }

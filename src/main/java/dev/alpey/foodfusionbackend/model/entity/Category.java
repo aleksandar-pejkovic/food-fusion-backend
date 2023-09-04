@@ -33,6 +33,9 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Food> foodList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "category")
+    private List<Condiment> condimentList = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

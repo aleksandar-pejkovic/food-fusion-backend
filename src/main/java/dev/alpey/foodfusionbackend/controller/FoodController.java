@@ -49,6 +49,12 @@ public class FoodController {
         return ResponseEntity.ok(foodDTO);
     }
 
+    @GetMapping("/categoryId/{id}")
+    public ResponseEntity<List<FoodDTO>> getFoodListByCategoryId(@PathVariable Long id) {
+        List<FoodDTO> foodDTOList = foodService.loadFoodListByCategoryId(id);
+        return ResponseEntity.ok(foodDTOList);
+    }
+
     @GetMapping("/current")
     public ResponseEntity<List<FoodDTO>> getCurrentUserFoods() {
         List<FoodDTO> foodDTOList = foodService.loadFoodListForCurrentUser();

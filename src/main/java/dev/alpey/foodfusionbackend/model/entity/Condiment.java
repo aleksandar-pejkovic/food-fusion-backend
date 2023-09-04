@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,4 +37,9 @@ public class Condiment {
             inverseJoinColumns = @JoinColumn(
                     name = "condiment_id", referencedColumnName = "id"))
     private List<Item> itemList = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 }

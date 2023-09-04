@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import dev.alpey.foodfusionbackend.model.dto.CategoryDTO;
@@ -26,7 +27,8 @@ public class CategoryMapper {
     private ModelMapper mapper;
 
     Category convertToEntity(CategoryDTO categoryDTO) {
-        User user = userRepository.findById(categoryDTO.getUserId()).orElseThrow();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username).orElseThrow();
         Category category = mapper.map(categoryDTO, Category.class);
         category.setUser(user);
         return category;

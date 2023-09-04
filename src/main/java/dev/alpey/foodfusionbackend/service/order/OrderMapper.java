@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import dev.alpey.foodfusionbackend.enums.OrderStatus;
@@ -31,7 +32,8 @@ public class OrderMapper {
     private ModelMapper mapper;
 
     Order convertToEntity(OrderDTO orderDTO) {
-        User user = userRepository.findById(orderDTO.getUserId()).orElseThrow();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username).orElseThrow();
         OrderStatus orderStatus = OrderStatus.fromString(orderDTO.getStatus());
         Order order = mapper.map(orderDTO, Order.class);
         order.setOrderStatus(orderStatus);
