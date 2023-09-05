@@ -41,5 +41,4 @@ public class Condiment {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
 }

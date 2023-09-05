@@ -43,6 +43,10 @@ public class CondimentService {
         return mapper.convertToDtoList(repository.findByCategoryId(categoryId));
     }
 
+    public List<CondimentDTO> loadCondimentListByItemId(Long itemId) {
+        return mapper.convertToDtoList(repository.findByItemId(itemId));
+    }
+
     public List<CondimentDTO> loadAllCondiment() {
         return mapper.convertToDtoList(repository.findAll());
     }

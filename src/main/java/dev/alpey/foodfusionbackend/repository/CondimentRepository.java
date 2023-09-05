@@ -14,4 +14,7 @@ public interface CondimentRepository extends ListCrudRepository<Condiment, Long>
 
     @Query("SELECT c FROM Condiment c WHERE c.category.id = :categoryId")
     List<Condiment> findByCategoryId(@Param("categoryId") Long categoryId);
+
+    @Query("SELECT c FROM Condiment c JOIN c.itemList i WHERE i.id = :itemId")
+    List<Condiment> findByItemId(@Param("itemId") Long itemId);
 }

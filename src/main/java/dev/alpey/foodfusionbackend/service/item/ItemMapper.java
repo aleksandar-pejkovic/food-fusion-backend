@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import dev.alpey.foodfusionbackend.model.dto.ItemDTO;
+import dev.alpey.foodfusionbackend.model.entity.Condiment;
 import dev.alpey.foodfusionbackend.model.entity.Food;
 import dev.alpey.foodfusionbackend.model.entity.Item;
 import dev.alpey.foodfusionbackend.model.entity.Order;
+import dev.alpey.foodfusionbackend.repository.CondimentRepository;
 import dev.alpey.foodfusionbackend.repository.FoodRepository;
 import dev.alpey.foodfusionbackend.repository.ItemRepository;
 import dev.alpey.foodfusionbackend.repository.OrderRepository;
@@ -28,14 +30,20 @@ public class ItemMapper {
     private OrderRepository orderRepository;
 
     @Autowired
+    private CondimentRepository condimentRepository;
+
+    @Autowired
     private ModelMapper mapper;
 
     Item convertToEntity(ItemDTO itemDTO) {
         Food food = foodRepository.findById(itemDTO.getFoodId()).orElseThrow();
         Order order = orderRepository.findById(itemDTO.getOrderId()).orElseThrow();
+        List<Long> condimentIdList = itemDTO.getCondimentIdList();
+        List<Condiment> condimentList = condimentRepository.findAllById(condimentIdList);
         Item item = mapper.map(itemDTO, Item.class);
         item.setOrder(order);
         item.setFood(food);
+        item.setCondimentList(condimentList);
         return item;
     }
 
@@ -43,6 +51,10 @@ public class ItemMapper {
         ItemDTO itemDTO = mapper.map(item, ItemDTO.class);
         itemDTO.setFoodId(item.getFood().getId());
         itemDTO.setOrderId(item.getOrder().getId());
+        List<Long> condimentIdList = item.getCondimentList().stream()
+                .map(Condiment::getId)
+                .collect(Collectors.toList());
+        itemDTO.setCondimentIdList(condimentIdList);
         return itemDTO;
     }
 
