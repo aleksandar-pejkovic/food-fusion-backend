@@ -13,6 +13,7 @@ import dev.alpey.foodfusionbackend.model.entity.Food;
 import dev.alpey.foodfusionbackend.repository.CategoryRepository;
 import dev.alpey.foodfusionbackend.repository.FoodRepository;
 import dev.alpey.foodfusionbackend.repository.UserRepository;
+import dev.alpey.foodfusionbackend.utils.ImageResize;
 
 @Component
 public class FoodMapper {
@@ -33,12 +34,14 @@ public class FoodMapper {
         Category category = categoryRepository.findById(foodDTO.getCategoryId()).orElseThrow();
         Food food = mapper.map(foodDTO, Food.class);
         food.setCategory(category);
+        resizeImageIfExist(food);
         return food;
     }
 
     Food convertToExistingEntity(FoodDTO foodDTO) {
         Food existingFood = foodRepository.findById(foodDTO.getCategoryId()).orElseThrow();
         mapper.map(foodDTO, existingFood);
+        resizeImageIfExist(existingFood);
         return existingFood;
     }
 
@@ -52,5 +55,12 @@ public class FoodMapper {
         return foodList.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    private void resizeImageIfExist(Food food) {
+        if (food.getImage() != null) {
+            byte[] resizedImage = ImageResize.resizeImage(food.getImage());
+            food.setImage(resizedImage);
+        }
     }
 }
