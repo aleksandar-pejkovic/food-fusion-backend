@@ -9,7 +9,6 @@ public enum PermissionName implements GrantedAuthority {
     UPDATE,
     DELETE,
     GRANT_ADMIN,
-    READ_EVENTS,
     UNRESTRICTED;
 
     @Override
