@@ -39,7 +39,7 @@ public class CondimentController {
     }
 
     @PutMapping("/{id}/update-image")
-    public byte[] updateCondimentImage(@RequestParam MultipartFile imageFile,
+    public CondimentDTO updateCondimentImage(@RequestParam MultipartFile imageFile,
                                       @PathVariable("id") Long condimentId) {
         return condimentService.updateCondimentImage(imageFile, condimentId);
     }

@@ -33,11 +33,11 @@ public class FoodService {
         return mapper.convertToDto(updatedFood);
     }
 
-    public byte[] updateFoodImage(MultipartFile imageFile, Long foodId) {
+    public FoodDTO updateFoodImage(MultipartFile imageFile, Long foodId) {
         Food existingFood = repository.findById(foodId).orElseThrow();
         byte[] resizedImage = ImageResize.resizeImage(imageFile);
         existingFood.setImage(resizedImage);
-        return repository.save(existingFood).getImage();
+        return mapper.convertToDto(repository.save(existingFood));
     }
 
     public void deleteFood(Long id) {

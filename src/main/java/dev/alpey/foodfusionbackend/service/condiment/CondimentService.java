@@ -32,11 +32,11 @@ public class CondimentService {
         return mapper.convertToDto(updatedCondiment);
     }
 
-    public byte[] updateCondimentImage(MultipartFile imageFile, Long condimentId) {
+    public CondimentDTO updateCondimentImage(MultipartFile imageFile, Long condimentId) {
         Condiment existingCondiment = repository.findById(condimentId).orElseThrow();
         byte[] resizedImage = ImageResize.resizeImage(imageFile);
         existingCondiment.setImage(resizedImage);
-        return repository.save(existingCondiment).getImage();
+        return mapper.convertToDto(repository.save(existingCondiment));
     }
 
     public void deleteCondiment(Long id) {

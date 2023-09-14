@@ -40,7 +40,7 @@ public class FoodController {
     }
 
     @PutMapping("/{id}/update-image")
-    public byte[] updateFoodImage(@RequestParam MultipartFile imageFile,
+    public FoodDTO updateFoodImage(@RequestParam MultipartFile imageFile,
                                       @PathVariable("id") Long foodId) {
         return foodService.updateFoodImage(imageFile, foodId);
     }
