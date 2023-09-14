@@ -140,3 +140,27 @@ INSERT INTO users_roles VALUES
     (1, 1),
     (1, 2),
     (1, 3);
+
+--changeset apejkovic:3
+
+INSERT INTO business VALUES
+(
+    1,
+    'Alpey',
+    'Aleksandar Pejković',
+    '12054617',
+    '102410257',
+    '170-0001570150-23',
+    'Prvomajska 14',
+    '37266',
+    'Obrež',
+    '0659170989',
+    'pejko1989@live.com',
+    'alpey.com',
+    1
+);
+
+INSERT INTO categories (name, user_id) VALUES
+('Sendviči', 1),
+('Pice', 1),
+('Palačinke', 1);
