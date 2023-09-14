@@ -45,6 +45,10 @@ public class CategoryService {
         return mapper.convertToDtoList(repository.findByUsername(username));
     }
 
+    public List<CategoryDTO> loadCategoryListByBusinessName(String businessName) {
+        return mapper.convertToDtoList(repository.findByBusinessName(businessName));
+    }
+
     public List<CategoryDTO> loadAllCategories() {
         return mapper.convertToDtoList(repository.findAll());
     }
