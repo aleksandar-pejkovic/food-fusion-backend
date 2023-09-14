@@ -64,6 +64,7 @@ CREATE TABLE condiments (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     description VARCHAR(255),
+    image BLOB,
     category_id BIGINT NULL,
     FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
 );

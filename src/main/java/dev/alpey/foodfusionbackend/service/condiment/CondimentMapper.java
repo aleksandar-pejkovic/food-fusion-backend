@@ -12,6 +12,7 @@ import dev.alpey.foodfusionbackend.model.entity.Category;
 import dev.alpey.foodfusionbackend.model.entity.Condiment;
 import dev.alpey.foodfusionbackend.repository.CategoryRepository;
 import dev.alpey.foodfusionbackend.repository.CondimentRepository;
+import dev.alpey.foodfusionbackend.utils.ImageResize;
 
 @Component
 public class CondimentMapper {
@@ -29,6 +30,7 @@ public class CondimentMapper {
         Category category = categoryRepository.findById(condimentDTO.getCategoryId()).orElseThrow();
         Condiment condiment = mapper.map(condimentDTO, Condiment.class);
         condiment.setCategory(category);
+        resizeImageIfExist(condiment);
         return condiment;
     }
 
@@ -37,6 +39,7 @@ public class CondimentMapper {
         mapper.map(condimentDTO, existingCondiment);
         Category category = categoryRepository.findById(condimentDTO.getCategoryId()).orElseThrow();
         existingCondiment.setCategory(category);
+        resizeImageIfExist(existingCondiment);
         return existingCondiment;
     }
 
@@ -50,5 +53,12 @@ public class CondimentMapper {
         return condimentList.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    private void resizeImageIfExist(Condiment condiment) {
+        if (condiment.getImage() != null) {
+            byte[] resizedImage = ImageResize.resizeImage(condiment.getImage());
+            condiment.setImage(resizedImage);
+        }
     }
 }
