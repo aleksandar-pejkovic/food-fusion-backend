@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.SneakyThrows;
 
@@ -19,12 +20,12 @@ public final class ImageResize {
     }
 
     @SneakyThrows
-    public static byte[] resizeImage(byte[] imageData) {
+    public static byte[] resizeImage(MultipartFile imageData) {
         if (imageData == null) {
             throw new IllegalArgumentException("Image data is null.");
         }
 
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData);
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageData.getBytes());
         BufferedImage originalImage = ImageIO.read(inputStream);
 
         if (originalImage == null) {

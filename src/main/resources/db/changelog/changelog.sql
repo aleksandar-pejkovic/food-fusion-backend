@@ -55,7 +55,7 @@ CREATE TABLE business (
 CREATE TABLE categories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
-    image BLOB,
+    image MEDIUMBLOB,
     user_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
@@ -64,7 +64,7 @@ CREATE TABLE condiments (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     description VARCHAR(255),
-    image BLOB,
+    image MEDIUMBLOB,
     category_id BIGINT NULL,
     FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
 );
@@ -73,7 +73,7 @@ CREATE TABLE food (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     price DOUBLE,
-    image BLOB,
+    image MEDIUMBLOB,
     category_id BIGINT,
     FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
 );

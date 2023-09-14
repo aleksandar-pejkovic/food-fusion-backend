@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import dev.alpey.foodfusionbackend.model.dto.CondimentDTO;
 import dev.alpey.foodfusionbackend.model.entity.Condiment;
 import dev.alpey.foodfusionbackend.repository.CondimentRepository;
+import dev.alpey.foodfusionbackend.utils.ImageResize;
 
 @Service
 public class CondimentService {
@@ -28,6 +30,13 @@ public class CondimentService {
         Condiment existingCondiment = mapper.convertToExistingEntity(condimentDTO);
         Condiment updatedCondiment = repository.save(existingCondiment);
         return mapper.convertToDto(updatedCondiment);
+    }
+
+    public byte[] updateCondimentImage(MultipartFile imageFile, Long condimentId) {
+        Condiment existingCondiment = repository.findById(condimentId).orElseThrow();
+        byte[] resizedImage = ImageResize.resizeImage(imageFile);
+        existingCondiment.setImage(resizedImage);
+        return repository.save(existingCondiment).getImage();
     }
 
     public void deleteCondiment(Long id) {

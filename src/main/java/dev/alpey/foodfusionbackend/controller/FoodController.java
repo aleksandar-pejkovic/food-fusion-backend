@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import dev.alpey.foodfusionbackend.model.dto.FoodDTO;
 import dev.alpey.foodfusionbackend.service.food.FoodService;
@@ -35,6 +37,12 @@ public class FoodController {
     public ResponseEntity<FoodDTO> updateFood(@Valid @RequestBody FoodDTO foodDTO) {
         FoodDTO updatedFoodDTO = foodService.updateFood(foodDTO);
         return ResponseEntity.ok(updatedFoodDTO);
+    }
+
+    @PutMapping("/{id}/update-image")
+    public byte[] updateFoodImage(@RequestParam MultipartFile imageFile,
+                                      @PathVariable("id") Long foodId) {
+        return foodService.updateFoodImage(imageFile, foodId);
     }
 
     @DeleteMapping("/{id}")

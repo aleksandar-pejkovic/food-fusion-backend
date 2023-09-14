@@ -3,7 +3,6 @@ package dev.alpey.foodfusionbackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import dev.alpey.foodfusionbackend.model.dto.CategoryDTO;
 import dev.alpey.foodfusionbackend.service.category.CategoryService;
@@ -26,33 +27,34 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> saveCategory(@RequestBody CategoryDTO categoryDTO) {
-        CategoryDTO savedCategoryDTO = categoryService.saveCategory(categoryDTO);
-        return ResponseEntity.ok(savedCategoryDTO);
+    public CategoryDTO saveCategory(@RequestBody CategoryDTO categoryDTO) {
+        return categoryService.saveCategory(categoryDTO);
     }
 
     @PutMapping
-    public ResponseEntity<CategoryDTO> updateCategory(@RequestBody CategoryDTO categoryDTO) {
-        CategoryDTO updatedCategoryDTO = categoryService.updateCategory(categoryDTO);
-        return ResponseEntity.ok(updatedCategoryDTO);
+    public CategoryDTO updateCategory(@RequestBody CategoryDTO categoryDTO) {
+        return categoryService.updateCategory(categoryDTO);
+    }
+
+    @PutMapping("/{id}/update-image")
+    public CategoryDTO updateCategoryImage(@RequestParam MultipartFile imageFile,
+                                           @PathVariable("id") Long categoryId) {
+        return categoryService.updateCategoryImage(imageFile, categoryId);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+    public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable Long id) {
-        CategoryDTO categoryDTO = categoryService.loadCategoryById(id);
-        return ResponseEntity.ok(categoryDTO);
+    public CategoryDTO getCategoryById(@PathVariable Long id) {
+        return categoryService.loadCategoryById(id);
     }
 
     @GetMapping("/current")
-    public ResponseEntity<List<CategoryDTO>> getCurrentUserCategories() {
-        List<CategoryDTO> categoryDTOList = categoryService.loadCategoryListForCurrentUser();
-        return ResponseEntity.ok(categoryDTOList);
+    public List<CategoryDTO> getCurrentUserCategories() {
+        return categoryService.loadCategoryListForCurrentUser();
     }
 
     @PreAuthorize("permitAll()")
@@ -63,8 +65,7 @@ public class CategoryController {
 
     @Secured("SCOPE_UNRESTRICTED")
     @GetMapping
-    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-        List<CategoryDTO> categoryDTOList = categoryService.loadAllCategories();
-        return ResponseEntity.ok(categoryDTOList);
+    public List<CategoryDTO> getAllCategories() {
+        return categoryService.loadAllCategories();
     }
 }
