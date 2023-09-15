@@ -48,8 +48,8 @@ public class CondimentService {
         return mapper.convertToDto(condiment);
     }
 
-    public List<CondimentDTO> loadCondimentListByCategoryId(Long categoryId) {
-        return mapper.convertToDtoList(repository.findByCategoryId(categoryId));
+    public List<CondimentDTO> loadCondimentListByFoodId(Long foodId) {
+        return mapper.convertToDtoList(repository.findByFoodId(foodId));
     }
 
     public List<CondimentDTO> loadCondimentListByItemId(Long itemId) {

@@ -56,9 +56,9 @@ public class CondimentController {
         return ResponseEntity.ok(condiment);
     }
 
-    @GetMapping("/byCategory/{categoryId}")
-    public ResponseEntity<List<CondimentDTO>> loadCondimentListByCategoryId(@PathVariable Long categoryId) {
-        List<CondimentDTO> condiments = condimentService.loadCondimentListByCategoryId(categoryId);
+    @GetMapping("/food-id/{foodId}")
+    public ResponseEntity<List<CondimentDTO>> loadCondimentListByFoodId(@PathVariable Long foodId) {
+        List<CondimentDTO> condiments = condimentService.loadCondimentListByFoodId(foodId);
         return ResponseEntity.ok(condiments);
     }
 

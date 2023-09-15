@@ -12,8 +12,8 @@ import dev.alpey.foodfusionbackend.model.entity.Condiment;
 @Repository
 public interface CondimentRepository extends ListCrudRepository<Condiment, Long> {
 
-    @Query("SELECT c FROM Condiment c WHERE c.category.id = :categoryId")
-    List<Condiment> findByCategoryId(@Param("categoryId") Long categoryId);
+    @Query("SELECT c FROM Condiment c JOIN Food f ON c.category.id = f.category.id WHERE f.id = :foodId")
+    List<Condiment> findByFoodId(@Param("foodId") Long foodId);
 
     @Query("SELECT c FROM Condiment c JOIN c.itemList i WHERE i.id = :itemId")
     List<Condiment> findByItemId(@Param("itemId") Long itemId);
