@@ -57,7 +57,6 @@ public class CategoryController {
         return categoryService.loadCategoryListForCurrentUser();
     }
 
-    @PreAuthorize("permitAll()")
     @GetMapping("/business-name/{businessName}")
     public List<CategoryDTO> getCategoriesByBusinessName(@PathVariable("businessName") String businessName) {
         return categoryService.loadCategoryListByBusinessName(businessName);
