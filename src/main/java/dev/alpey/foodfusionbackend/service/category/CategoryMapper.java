@@ -5,14 +5,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import dev.alpey.foodfusionbackend.model.dto.CategoryDTO;
+import dev.alpey.foodfusionbackend.model.entity.Business;
 import dev.alpey.foodfusionbackend.model.entity.Category;
-import dev.alpey.foodfusionbackend.model.entity.User;
+import dev.alpey.foodfusionbackend.repository.BusinessRepository;
 import dev.alpey.foodfusionbackend.repository.CategoryRepository;
-import dev.alpey.foodfusionbackend.repository.UserRepository;
 
 @Component
 public class CategoryMapper {
@@ -21,16 +20,15 @@ public class CategoryMapper {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private BusinessRepository businessRepository;
 
     @Autowired
     private ModelMapper mapper;
 
     Category convertToEntity(CategoryDTO categoryDTO) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
+        Business business = businessRepository.findById(categoryDTO.getBusinessId()).orElseThrow();
         Category category = mapper.map(categoryDTO, Category.class);
-        category.setUser(user);
+        category.setBusiness(business);
         return category;
     }
 
@@ -42,7 +40,7 @@ public class CategoryMapper {
 
     CategoryDTO convertToDto(Category category) {
         CategoryDTO categoryDTO = mapper.map(category, CategoryDTO.class);
-        categoryDTO.setUserId(category.getUser().getId());
+        categoryDTO.setBusinessId(category.getBusiness().getId());
         return categoryDTO;
     }
 

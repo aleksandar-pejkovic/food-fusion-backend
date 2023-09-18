@@ -13,5 +13,5 @@ public class CategoryDTO {
 
     private byte[] image;
 
-    private Long userId;
+    private Long businessId;
 }

@@ -23,9 +23,9 @@ public class ItemController {
     private ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<ItemDTO> saveItem(@RequestBody ItemDTO itemDTO) {
-        ItemDTO savedItemDTO = itemService.saveItem(itemDTO);
-        return ResponseEntity.ok(savedItemDTO);
+    public ResponseEntity<List<ItemDTO>> saveItems(@RequestBody List<ItemDTO> itemDTOList) {
+        List<ItemDTO> savedItemDTOs = itemService.saveItems(itemDTOList);
+        return ResponseEntity.ok(savedItemDTOs);
     }
 
     @DeleteMapping("/{id}")

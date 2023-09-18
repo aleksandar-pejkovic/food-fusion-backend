@@ -12,6 +12,9 @@ import dev.alpey.foodfusionbackend.model.entity.Order;
 @Repository
 public interface OrderRepository extends ListCrudRepository<Order, Long> {
 
-    @Query("SELECT o FROM Order o WHERE o.user.username = :username")
-    List<Order> findByUsername(@Param("username") String username);
+    @Query("SELECT o FROM Order o WHERE o.business.id = :businessId")
+    List<Order> findByBusinessId(@Param("businessId") Long businessId);
+
+    @Query("SELECT COUNT(o) from Order o WHERE o.business.id = :businessId")
+    Integer countOrdersByBusinessId(@Param("businessId") Long businessId);
 }

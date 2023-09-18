@@ -17,5 +17,5 @@ public class OrderDTO {
 
     private String status;
 
-    private Long userId;
+    private Long businessId;
 }

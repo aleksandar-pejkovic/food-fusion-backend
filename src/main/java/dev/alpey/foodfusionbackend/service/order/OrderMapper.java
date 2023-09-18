@@ -5,16 +5,14 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import dev.alpey.foodfusionbackend.enums.OrderStatus;
 import dev.alpey.foodfusionbackend.model.dto.OrderDTO;
+import dev.alpey.foodfusionbackend.model.entity.Business;
 import dev.alpey.foodfusionbackend.model.entity.Order;
-import dev.alpey.foodfusionbackend.model.entity.User;
 import dev.alpey.foodfusionbackend.repository.BusinessRepository;
 import dev.alpey.foodfusionbackend.repository.OrderRepository;
-import dev.alpey.foodfusionbackend.repository.UserRepository;
 
 @Component
 public class OrderMapper {
@@ -26,18 +24,14 @@ public class OrderMapper {
     private BusinessRepository businessRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private ModelMapper mapper;
 
     Order convertToEntity(OrderDTO orderDTO) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(username).orElseThrow();
+        Business business = businessRepository.findById(orderDTO.getBusinessId()).orElseThrow();
         OrderStatus orderStatus = OrderStatus.fromString(orderDTO.getStatus());
         Order order = mapper.map(orderDTO, Order.class);
         order.setOrderStatus(orderStatus);
-        order.setUser(user);
+        order.setBusiness(business);
         return order;
     }
 
@@ -52,7 +46,7 @@ public class OrderMapper {
     OrderDTO convertToDto(Order order) {
         OrderDTO orderDTO = mapper.map(order, OrderDTO.class);
         orderDTO.setStatus(order.getOrderStatus().getStatus());
-        orderDTO.setUserId(order.getUser().getId());
+        orderDTO.setBusinessId(order.getBusiness().getId());
         return orderDTO;
     }
 

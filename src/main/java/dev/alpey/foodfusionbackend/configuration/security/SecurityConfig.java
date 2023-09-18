@@ -56,9 +56,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/businesses/{id}").permitAll()
                         .requestMatchers("/api/categories/{id}").permitAll()
-                        .requestMatchers("/api/categories/business-name/{businessName}").permitAll()
                         .requestMatchers("/api/condiments/food-id/{foodId}").permitAll()
+                        .requestMatchers("/api/categories/business-id/{businessId}").permitAll()
                         .requestMatchers("/api/foods/{id}").permitAll()
                         .requestMatchers("/api/foods/categoryId/{id}").permitAll()
                         .requestMatchers("/api/password/**").permitAll()

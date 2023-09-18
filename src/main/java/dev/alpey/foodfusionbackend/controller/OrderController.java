@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.alpey.foodfusionbackend.model.dto.OrderDTO;
@@ -25,8 +26,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<OrderDTO> saveOrder(@RequestBody OrderDTO orderDTO) {
-        OrderDTO savedOrderDTO = orderService.saveOrder(orderDTO);
+    public ResponseEntity<OrderDTO> saveOrder(@RequestParam("businessId") Long businessId) {
+        OrderDTO savedOrderDTO = orderService.saveOrder(businessId);
         return ResponseEntity.ok(savedOrderDTO);
     }
 
@@ -48,9 +49,9 @@ public class OrderController {
         return ResponseEntity.ok(orderDTO);
     }
 
-    @GetMapping("/current")
-    public ResponseEntity<List<OrderDTO>> getCurrentUserOrders() {
-        List<OrderDTO> orderDTOList = orderService.loadOrderListByUsername();
+    @GetMapping("/business-id/{businessId}")
+    public ResponseEntity<List<OrderDTO>> getCurrentUserOrders(@PathVariable("businessId") Long businessId) {
+        List<OrderDTO> orderDTOList = orderService.loadOrderListByBusinessId(businessId);
         return ResponseEntity.ok(orderDTOList);
     }
 

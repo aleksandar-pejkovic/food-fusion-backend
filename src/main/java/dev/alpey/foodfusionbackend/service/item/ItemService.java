@@ -18,10 +18,10 @@ public class ItemService {
     @Autowired
     private ItemMapper mapper;
 
-    public ItemDTO saveItem(ItemDTO itemDTO) {
-        Item item = mapper.convertToEntity(itemDTO);
-        Item savedItem = repository.save(item);
-        return mapper.convertToDto(savedItem);
+    public List<ItemDTO> saveItems(List<ItemDTO> itemDTOList) {
+        List<Item> itemList = mapper.convertToEntityList(itemDTOList);
+        List<Item> savedItemList = repository.saveAll(itemList);
+        return mapper.convertToDtoList(savedItemList);
     }
 
     public void deleteItem(Long id) {

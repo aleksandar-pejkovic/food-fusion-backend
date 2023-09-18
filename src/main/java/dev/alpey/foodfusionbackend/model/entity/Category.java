@@ -37,6 +37,6 @@ public class Category {
     private List<Condiment> condimentList = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "business_id")
+    private Business business;
 }

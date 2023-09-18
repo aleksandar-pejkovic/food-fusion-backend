@@ -3,7 +3,6 @@ package dev.alpey.foodfusionbackend.service.category;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,13 +49,8 @@ public class CategoryService {
         return mapper.convertToDto(category);
     }
 
-    public List<CategoryDTO> loadCategoryListForCurrentUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return mapper.convertToDtoList(repository.findByUsername(username));
-    }
-
-    public List<CategoryDTO> loadCategoryListByBusinessName(String businessName) {
-        return mapper.convertToDtoList(repository.findByBusinessName(businessName));
+    public List<CategoryDTO> loadCategoryListByBusinessId(Long businessId) {
+        return mapper.convertToDtoList(repository.findByBusinessId(businessId));
     }
 
     public List<CategoryDTO> loadAllCategories() {

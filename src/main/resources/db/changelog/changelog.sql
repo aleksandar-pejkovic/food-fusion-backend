@@ -49,15 +49,15 @@ CREATE TABLE business (
     email VARCHAR(255),
     website VARCHAR(255),
     user_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE categories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     image MEDIUMBLOB,
-    user_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    business_id BIGINT,
+    FOREIGN KEY (business_id) REFERENCES business (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE condiments (
@@ -66,7 +66,7 @@ CREATE TABLE condiments (
     description VARCHAR(255),
     image MEDIUMBLOB,
     category_id BIGINT NULL,
-    FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
+    FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE food (
@@ -75,7 +75,7 @@ CREATE TABLE food (
     price DOUBLE,
     image MEDIUMBLOB,
     category_id BIGINT,
-    FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
+    FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE orders (
@@ -83,8 +83,8 @@ CREATE TABLE orders (
     order_number INT,
     creation_date date,
     order_status VARCHAR(255),
-    user_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    business_id BIGINT,
+    FOREIGN KEY (business_id) REFERENCES business (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE items (
@@ -92,15 +92,15 @@ CREATE TABLE items (
     quantity DOUBLE,
     food_id BIGINT,
     order_id BIGINT,
-    FOREIGN KEY (food_id) REFERENCES food (id) ON DELETE CASCADE,
-    FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE
+    FOREIGN KEY (food_id) REFERENCES food (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE items_condiments (
     condiment_id BIGINT,
     item_id BIGINT,
-    FOREIGN KEY (condiment_id) REFERENCES condiments (id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES items (id) ON DELETE CASCADE
+    FOREIGN KEY (condiment_id) REFERENCES condiments (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES items (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --changeset apejkovic:2
@@ -160,7 +160,7 @@ INSERT INTO business VALUES
     1
 );
 
-INSERT INTO categories (name, user_id) VALUES
+INSERT INTO categories (name, business_id) VALUES
 ('Sendviči', 1),
 ('Pice', 1),
 ('Palačinke', 1);
