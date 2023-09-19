@@ -3,7 +3,6 @@ package dev.alpey.foodfusionbackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,51 +26,44 @@ public class CondimentController {
     private CondimentService condimentService;
 
     @PostMapping
-    public ResponseEntity<CondimentDTO> saveCondiment(@RequestBody CondimentDTO condimentDTO) {
-        CondimentDTO savedCondiment = condimentService.saveCondiment(condimentDTO);
-        return ResponseEntity.ok(savedCondiment);
+    public CondimentDTO saveCondiment(@RequestBody CondimentDTO condimentDTO) {
+        return condimentService.saveCondiment(condimentDTO);
     }
 
     @PutMapping
-    public ResponseEntity<CondimentDTO> updateCondiment(@RequestBody CondimentDTO condimentDTO) {
-        CondimentDTO updatedCondiment = condimentService.updateCondiment(condimentDTO);
-        return ResponseEntity.ok(updatedCondiment);
+    public CondimentDTO updateCondiment(@RequestBody CondimentDTO condimentDTO) {
+        return condimentService.updateCondiment(condimentDTO);
     }
 
     @PutMapping("/{id}/update-image")
     public CondimentDTO updateCondimentImage(@RequestParam MultipartFile imageFile,
-                                      @PathVariable("id") Long condimentId) {
+                                             @PathVariable("id") Long condimentId) {
         return condimentService.updateCondimentImage(imageFile, condimentId);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCondiment(@PathVariable Long id) {
+    public void deleteCondiment(@PathVariable Long id) {
         condimentService.deleteCondiment(id);
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CondimentDTO> loadCondimentById(@PathVariable Long id) {
-        CondimentDTO condiment = condimentService.loadCondimentById(id);
-        return ResponseEntity.ok(condiment);
+    public CondimentDTO loadCondimentById(@PathVariable Long id) {
+        return condimentService.loadCondimentById(id);
     }
 
     @GetMapping("/food-id/{foodId}")
-    public ResponseEntity<List<CondimentDTO>> loadCondimentListByFoodId(@PathVariable Long foodId) {
-        List<CondimentDTO> condiments = condimentService.loadCondimentListByFoodId(foodId);
-        return ResponseEntity.ok(condiments);
+    public List<CondimentDTO> loadCondimentListByFoodId(@PathVariable Long foodId) {
+        return condimentService.loadCondimentListByFoodId(foodId);
     }
 
     @GetMapping("/byItem/{itemId}")
-    public ResponseEntity<List<CondimentDTO>> loadCondimentListByItemId(@PathVariable Long itemId) {
-        List<CondimentDTO> condiments = condimentService.loadCondimentListByItemId(itemId);
-        return ResponseEntity.ok(condiments);
+    public List<CondimentDTO> loadCondimentListByItemId(@PathVariable Long itemId) {
+        return condimentService.loadCondimentListByItemId(itemId);
     }
 
     @Secured("SCOPE_UNRESTRICTED")
     @GetMapping
-    public ResponseEntity<List<CondimentDTO>> loadAllCondiment() {
-        List<CondimentDTO> condiments = condimentService.loadAllCondiment();
-        return ResponseEntity.ok(condiments);
+    public List<CondimentDTO> loadAllCondiment() {
+        return condimentService.loadAllCondiment();
     }
 }

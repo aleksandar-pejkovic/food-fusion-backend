@@ -3,7 +3,6 @@ package dev.alpey.foodfusionbackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,26 +22,22 @@ public class ItemController {
     private ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<List<ItemDTO>> saveItems(@RequestBody List<ItemDTO> itemDTOList) {
-        List<ItemDTO> savedItemDTOs = itemService.saveItems(itemDTOList);
-        return ResponseEntity.ok(savedItemDTOs);
+    public List<ItemDTO> saveItems(@RequestBody List<ItemDTO> itemDTOList) {
+        return itemService.saveItems(itemDTOList);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
+    public void deleteItem(@PathVariable Long id) {
         itemService.deleteItem(id);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemDTO> getItemById(@PathVariable Long id) {
-        ItemDTO itemDTO = itemService.loadItemById(id);
-        return ResponseEntity.ok(itemDTO);
+    public ItemDTO getItemById(@PathVariable Long id) {
+        return itemService.loadItemById(id);
     }
 
     @GetMapping("/order/{orderId}")
-    public ResponseEntity<List<ItemDTO>> getItemsByOrderId(@PathVariable Long orderId) {
-        List<ItemDTO> itemDTOList = itemService.loadItemListByOrderId(orderId);
-        return ResponseEntity.ok(itemDTOList);
+    public List<ItemDTO> getItemsByOrderId(@PathVariable Long orderId) {
+        return itemService.loadItemListByOrderId(orderId);
     }
 }

@@ -3,7 +3,6 @@ package dev.alpey.foodfusionbackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,33 +24,28 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> registerUser(@RequestBody UserDTO userDTO) {
-        UserDTO registeredUserDTO = userService.registerUser(userDTO);
-        return ResponseEntity.ok(registeredUserDTO);
+    public UserDTO registerUser(@RequestBody UserDTO userDTO) {
+        return userService.registerUser(userDTO);
     }
 
     @PutMapping
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
-        UserDTO updatedUserDTO = userService.updateUser(userDTO);
-        return ResponseEntity.ok(updatedUserDTO);
+    public UserDTO updateUser(@RequestBody UserDTO userDTO) {
+        return userService.updateUser(userDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/current")
-    public ResponseEntity<UserDTO> getCurrentUser() {
-        UserDTO currentUserDTO = userService.loadCurrentUser();
-        return ResponseEntity.ok(currentUserDTO);
+    public UserDTO getCurrentUser() {
+        return userService.loadCurrentUser();
     }
 
     @Secured("SCOPE_UNRESTRICTED")
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> userDTOList = userService.loadAllUsers();
-        return ResponseEntity.ok(userDTOList);
+    public List<UserDTO> getAllUsers() {
+        return userService.loadAllUsers();
     }
 }

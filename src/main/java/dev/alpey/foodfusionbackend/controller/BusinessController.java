@@ -3,7 +3,6 @@ package dev.alpey.foodfusionbackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +25,13 @@ public class BusinessController {
     private BusinessService businessService;
 
     @PostMapping
-    public ResponseEntity<BusinessDTO> saveBusiness(@Valid @RequestBody BusinessDTO businessDTO) {
-        return ResponseEntity.ok(businessService.saveBusiness(businessDTO));
+    public BusinessDTO saveBusiness(@Valid @RequestBody BusinessDTO businessDTO) {
+        return businessService.saveBusiness(businessDTO);
     }
 
     @PutMapping
-    public ResponseEntity<BusinessDTO> updateBusiness(@Valid @RequestBody BusinessDTO businessDTO) {
-        return ResponseEntity.ok(businessService.updateBusiness(businessDTO));
+    public BusinessDTO updateBusiness(@Valid @RequestBody BusinessDTO businessDTO) {
+        return businessService.updateBusiness(businessDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -41,18 +40,18 @@ public class BusinessController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BusinessDTO> getBusinessById(@PathVariable Long id) {
-        return ResponseEntity.ok(businessService.loadBusinessById(id));
+    public BusinessDTO getBusinessById(@PathVariable Long id) {
+        return businessService.loadBusinessById(id);
     }
 
     @GetMapping("/current")
-    public ResponseEntity<List<BusinessDTO>> getCurrentUserBusinesses() {
-        return ResponseEntity.ok(businessService.loadBusinessListForCurrentUser());
+    public List<BusinessDTO> getCurrentUserBusinesses() {
+        return businessService.loadBusinessListForCurrentUser();
     }
 
     @Secured("SCOPE_UNRESTRICTED")
     @GetMapping
-    public ResponseEntity<List<BusinessDTO>> getAllBusinesses() {
-        return ResponseEntity.ok(businessService.loadAllBusinesses());
+    public List<BusinessDTO> getAllBusinesses() {
+        return businessService.loadAllBusinesses();
     }
 }

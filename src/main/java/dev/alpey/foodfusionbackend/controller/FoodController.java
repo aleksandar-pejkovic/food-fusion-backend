@@ -3,7 +3,6 @@ package dev.alpey.foodfusionbackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,51 +27,44 @@ public class FoodController {
     private FoodService foodService;
 
     @PostMapping
-    public ResponseEntity<FoodDTO> saveFood(@Valid @RequestBody FoodDTO foodDTO) {
-        FoodDTO savedFoodDTO = foodService.saveFood(foodDTO);
-        return ResponseEntity.ok(savedFoodDTO);
+    public FoodDTO saveFood(@Valid @RequestBody FoodDTO foodDTO) {
+        return foodService.saveFood(foodDTO);
     }
 
     @PutMapping
-    public ResponseEntity<FoodDTO> updateFood(@Valid @RequestBody FoodDTO foodDTO) {
-        FoodDTO updatedFoodDTO = foodService.updateFood(foodDTO);
-        return ResponseEntity.ok(updatedFoodDTO);
+    public FoodDTO updateFood(@Valid @RequestBody FoodDTO foodDTO) {
+        return foodService.updateFood(foodDTO);
     }
 
     @PutMapping("/{id}/update-image")
     public FoodDTO updateFoodImage(@RequestParam MultipartFile imageFile,
-                                      @PathVariable("id") Long foodId) {
+                                   @PathVariable("id") Long foodId) {
         return foodService.updateFoodImage(imageFile, foodId);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
+    public void deleteFood(@PathVariable Long id) {
         foodService.deleteFood(id);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FoodDTO> getFoodById(@PathVariable Long id) {
-        FoodDTO foodDTO = foodService.loadFoodById(id);
-        return ResponseEntity.ok(foodDTO);
+    public FoodDTO getFoodById(@PathVariable Long id) {
+        return foodService.loadFoodById(id);
     }
 
     @GetMapping("/categoryId/{id}")
-    public ResponseEntity<List<FoodDTO>> getFoodListByCategoryId(@PathVariable Long id) {
-        List<FoodDTO> foodDTOList = foodService.loadFoodListByCategoryId(id);
-        return ResponseEntity.ok(foodDTOList);
+    public List<FoodDTO> getFoodListByCategoryId(@PathVariable Long id) {
+        return foodService.loadFoodListByCategoryId(id);
     }
 
     @GetMapping("/current")
-    public ResponseEntity<List<FoodDTO>> getCurrentUserFoods() {
-        List<FoodDTO> foodDTOList = foodService.loadFoodListForCurrentUser();
-        return ResponseEntity.ok(foodDTOList);
+    public List<FoodDTO> getCurrentUserFoods() {
+        return foodService.loadFoodListForCurrentUser();
     }
 
     @Secured("SCOPE_UNRESTRICTED")
     @GetMapping
-    public ResponseEntity<List<FoodDTO>> getAllFoods() {
-        List<FoodDTO> foodDTOList = foodService.loadAllFood();
-        return ResponseEntity.ok(foodDTOList);
+    public List<FoodDTO> getAllFoods() {
+        return foodService.loadAllFood();
     }
 }
