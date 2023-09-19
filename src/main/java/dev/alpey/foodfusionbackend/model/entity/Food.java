@@ -8,13 +8,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "food")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Food {
 
     @Id

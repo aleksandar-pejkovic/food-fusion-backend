@@ -2,10 +2,10 @@ package dev.alpey.foodfusionbackend.enums;
 
 public enum OrderStatus {
 
-    PENDING("Pending"),
-    PROCESSING("Processing"),
-    COMPLETED("Completed"),
-    CANCELLED("Cancelled");
+    PENDING("Čeka se odobrenje"),
+    PROCESSING("U toku..."),
+    COMPLETED("Spremno"),
+    CANCELLED("Otkazano");
 
     private final String status;
 

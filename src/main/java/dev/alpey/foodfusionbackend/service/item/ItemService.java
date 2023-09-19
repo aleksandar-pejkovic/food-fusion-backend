@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import dev.alpey.foodfusionbackend.model.dto.ItemDTO;
 import dev.alpey.foodfusionbackend.model.entity.Item;
+import dev.alpey.foodfusionbackend.model.entity.Order;
 import dev.alpey.foodfusionbackend.repository.ItemRepository;
+import dev.alpey.foodfusionbackend.repository.OrderRepository;
 
 @Service
 public class ItemService {
@@ -16,10 +18,14 @@ public class ItemService {
     private ItemRepository repository;
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
     private ItemMapper mapper;
 
     public List<ItemDTO> saveItems(List<ItemDTO> itemDTOList) {
-        List<Item> itemList = mapper.convertToEntityList(itemDTOList);
+        Order order = orderRepository.findById(itemDTOList.get(0).getOrderId()).orElseThrow();
+        List<Item> itemList = mapper.convertToEntityList(itemDTOList, order);
         List<Item> savedItemList = repository.saveAll(itemList);
         return mapper.convertToDtoList(savedItemList);
     }
